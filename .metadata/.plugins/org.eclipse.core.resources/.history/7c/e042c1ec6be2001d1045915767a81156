@@ -1,0 +1,12 @@
+import java.sql.Connection;
+
+import kr.or.kosa.utils.SingletonHelper;
+
+public class Ex07_SingletonHelper {
+
+	public static void main(String[] args) {
+		Connection conn = null;
+		conn = SingletonHelper.getConnection("oracle", "kosa", "1004");
+	}
+
+}

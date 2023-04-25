@@ -1,0 +1,15 @@
+package DAO;
+
+import java.util.*;
+
+import DTO.Emp;
+
+public class EmpDao {
+	
+	public List<Emp> getEmpList(){
+		
+		
+		
+		return null;
+	}
+}

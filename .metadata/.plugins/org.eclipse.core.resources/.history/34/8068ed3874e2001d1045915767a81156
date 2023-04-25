@@ -1,0 +1,15 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+public class Ex09_Oracle_prepared_DML {
+
+	public static void main(String[] args) {
+		//INSERT
+		//insert into dmlemp(empno,ename,deptno) values(?,?,?)
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+	}
+
+}

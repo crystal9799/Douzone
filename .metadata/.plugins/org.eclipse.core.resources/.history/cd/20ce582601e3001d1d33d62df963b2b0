@@ -1,0 +1,17 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import kr.or.kosa.utils.SingletonHelper;
+
+public class Ex10_Oracle_Transaction {
+
+	public static void main(String[] args) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		
+		conn = SingletonHelper.getConnection("oracle", "kosa", "1004")
+		
+	}
+
+}

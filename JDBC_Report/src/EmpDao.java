@@ -1,0 +1,200 @@
+
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.*;
+//import java.sql.Date;
+
+public class EmpDao {
+	//전체조회
+	public List<Emp> getEmpList(){
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Emp> empList = new ArrayList<>();
+		
+		try {
+			String sql="select empno,ename from emp";
+			conn=SingletonHelper.getConnection("oracle", "KOSA", "1004");
+			pstmt=conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Emp emp = new Emp();
+				emp.setEmpno(rs.getInt("empno"));
+				emp.setEname(rs.getString("ename"));
+				empList.add(emp);
+				System.out.println("Empno=" + emp.getEmpno()+"Ename="+emp.getEname());
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				SingletonHelper.close(rs);
+				SingletonHelper.close(pstmt);
+			} catch (Exception e2) {
+				System.out.println(e2.getMessage());
+			}
+		}		
+		return empList;
+	}
+	//조건조회
+	public Emp getEmpSelect(int empno) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Emp emp = new Emp();
+		
+		try {
+			String sql = "select ename, job, hiredate from Emp where empno=?";
+			conn = SingletonHelper.getConnection("oracle", "kosa", "1004");
+			pstmt = conn.prepareStatement(sql);			
+			pstmt.setInt(1, empno);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				emp.setEname(rs.getString("ename"));
+				emp.setJob(rs.getString("job"));
+				emp.setHiredate(rs.getDate("hiredate"));
+//				emp.setHiredate(rs.getString("hiredate"));
+				
+			}
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return emp;
+	}
+	
+	//삽입
+	public int insertEmp(Emp emp) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row=0;
+		//to_char(sysdate,"YYYY-MM-DD")
+		try {
+			String sql="insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(?,?,?,?,?,?,?,?)";
+			conn = SingletonHelper.getConnection("oracle", "kosa", "1004");
+			pstmt = conn.prepareStatement(sql);
+			//"to_char(sysdate,'YYYY-MM-DD')"
+			pstmt.setInt(1, emp.getEmpno());
+			pstmt.setString(2, emp.getEname());
+			pstmt.setString(3, emp.getJob());
+			pstmt.setInt(4, emp.getMgr());
+			pstmt.setDate(5, emp.getHiredate());
+//			pstmt.setString(5, emp.getHiredate());
+			pstmt.setInt(6, emp.getSal());
+			pstmt.setInt(7, emp.getComm());
+			pstmt.setInt(8, emp.getDeptno());
+			
+			row = pstmt.executeUpdate();
+			if(row>0) {
+				System.out.println("insert row : "+row);
+			}else {
+				System.out.println("변경된 줄이 없습니다.");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			SingletonHelper.close(pstmt);
+		}
+		
+		return row;
+	}
+	//삭제
+	public int deleteEmp(int empno) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row=0;
+		//to_char(sysdate,"YYYY-MM-DD")
+		try {
+			String sql="delete from emp where empno=?";
+			conn = SingletonHelper.getConnection("oracle", "kosa", "1004");
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, empno);
+			
+			row = pstmt.executeUpdate();
+			if(row>0) {
+				System.out.println("insert row : "+row);
+			}else {
+				System.out.println("변경된 줄이 없습니다.");
+			}
+			
+		} catch (Exception e) {
+			e.getMessage();
+		}finally {
+			SingletonHelper.close(pstmt);
+		}		
+		return row;
+	}
+	//수정
+	public int updateEmp(Emp emp) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int row=0;
+		//to_char(sysdate,"YYYY-MM-DD")
+		try {
+			String sql="update emp set ename=?, job=?, sal=?, hiredate=? where empno=?";
+			conn = SingletonHelper.getConnection("oracle", "kosa", "1004");
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, emp.getEname());
+			pstmt.setString(2, emp.getJob());
+			pstmt.setInt(3, emp.getSal());
+			pstmt.setDate(4, emp.getHiredate());
+			pstmt.setInt(5, emp.getEmpno());
+			
+			row = pstmt.executeUpdate();
+			if(row>0) {
+				System.out.println("insert row : "+row);
+			}else {
+				System.out.println("변경된 줄이 없습니다.");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			SingletonHelper.close(pstmt);
+		}
+		
+		return row;
+	}
+	//Like 검색 >> 이름 검색
+	public List<Emp> searchEmpName(String search) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Emp> emplist2 = new ArrayList<>();
+		
+		try {
+			String sql = "select empno,ename,job,sal from Emp where ename like ?";
+			conn=SingletonHelper.getConnection("oracle", "kosa", "1004");
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "%"+search+"%");
+			rs=pstmt.executeQuery();
+						
+//			pstmt.executeUpdate();
+			
+			while(rs.next()) {
+				Emp emp = new Emp();
+				emp.setEmpno(rs.getInt("empno"));
+				emp.setEname(rs.getString("ename"));
+				emp.setJob(rs.getString("job"));
+				emp.setSal(rs.getInt("sal"));
+				emplist2.add(emp);
+			}
+			
+			
+		} catch (Exception e) {
+			System.out.println("여기니?");
+			System.out.println(e.getMessage());
+		}
+		System.out.println("실행완료");
+		return emplist2;
+	}
+}

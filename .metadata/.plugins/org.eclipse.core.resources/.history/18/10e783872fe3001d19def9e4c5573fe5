@@ -1,0 +1,24 @@
+
+public class Program {
+
+	public static void main(String[] args) {
+		EmpDao dao = new EmpDao();
+		
+//		System.out.println(dao.getEmpList().toString());
+//		System.out.println(dao.getEmpSelect(7499).toString());
+		
+		Emp emp = new Emp();
+		emp.setEmpno(100);
+		emp.setEname("홍길동");
+		emp.setJob("IT");
+		emp.setComm(100);
+		emp.setDeptno(555);
+		emp.setMgr(5555);
+		emp.setSal(333);
+		emp.setHiredate("sysdate");
+		dao.insertEmp(emp);
+		
+		System.out.println(emp.toString());
+	}
+
+}

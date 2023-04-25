@@ -1,0 +1,20 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import kr.or.kosa.utils.SingletonHelper;
+
+public class Ex10_Oracle_Transaction {
+
+	public static void main(String[] args) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		
+		conn = SingletonHelper.getConnection("oracle", "kosa", "1004");
+		
+		String sql="insert into trans_A(num,name) values(100,'A')";
+		String sql2="insert into trans_B(num,name) values(100,'B')";
+		
+	}
+
+}

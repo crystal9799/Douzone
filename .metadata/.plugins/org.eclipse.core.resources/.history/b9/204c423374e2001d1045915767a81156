@@ -1,0 +1,11 @@
+
+public class Ex09_Oracle_prepared_DML {
+
+	public static void main(String[] args) {
+		//INSERT
+		//insert into dmlemp(empno,ename,deptno) values(?,?,?)
+		
+		
+	}
+
+}

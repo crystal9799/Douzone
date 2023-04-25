@@ -1,0 +1,76 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.Scanner;
+
+/*
+실습쿼리
+ create table dmlemp
+as 
+    select * from emp;
+    
+select * from dmlemp;
+
+select * from user_constraints where table_name='DMLEMP';
+
+alter table dmlemp
+add constraint pk_dmlemp_empno primary key(empno);
+
+select * from dmlemp;
+ */
+
+
+public class Ex03_Oracle_DML_insert {
+
+	public static void main(String[] args) {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		
+		try {
+			//드라이버 로딩 생략
+			
+			//연결객체 생성하기
+			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/kosadb","kosa","1004");
+			stmt = conn.createStatement();
+			
+			//insert
+			int empno=0;
+			String ename=null;
+			int deptno=0;
+			
+			Scanner sc = new Scanner(System.in);
+			System.out.println("사번입력");
+			empno = Integer.parseInt(sc.nextLine());
+			
+			System.out.println("이름입력");
+			ename = sc.nextLine();
+			
+			System.out.println("부서입력");
+			deptno = Integer.parseInt(sc.nextLine());
+			
+			//insert into dmlemp(empno,ename,deptno) values(100,'홍길동',10)
+			//전통적이고 고전적인 방법
+			String sql = "insert into dmlemp(empno,ename,deptno)"; 
+				   sql+= "values(" + ename + ",'"+ename+"',"+deptno+")";
+			//이 방법을 사용했어요 실개방 (오타작렬)
+			System.out.println(sql);
+			
+			//현재 values(?,?,?)   ? 한개 = parameter 한개
+			//executeUpdate() 함수 (insert , update , delete) 전부 수행
+			
+			int resultrow = stmt.executeUpdate(sql);
+			
+			if(resultrow > 0) {
+				System.out.println("반영된 행의 수 : " + resultrow);
+			}else {
+				System.out.println("예외가 발생된 것이 아니고 : 반영된 행이 없다");
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		
+	}
+
+}

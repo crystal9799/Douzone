@@ -1,0 +1,33 @@
+import java.text.SimpleDateFormat;
+
+public class Program {
+
+	
+	public static void main(String[] args) {
+		EmpDao dao = new EmpDao();
+	//"to_char(sysdate,'YYYY-MM-DD HH:MM:SS')"	
+//		System.out.println(dao.getEmpList().toString());
+//		System.out.println(dao.getEmpSelect(7499).toString());
+		java.util.Date utilDate = new java.util.Date();
+		 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String formattedDate = dateFormat.format(utilDate);
+		java.sql.Date sqlDate = java.sql.Date.valueOf(formattedDate);
+		
+		Emp emp = new Emp();
+		emp.setEmpno(100);
+		emp.setEname("홍길동");
+		emp.setJob("IT");
+		emp.setComm(100);
+		emp.setDeptno(555);
+		emp.setMgr(5555);
+		emp.setSal(333);
+		emp.setHiredate(sqlDate);
+		
+		dao.insertEmp(emp);
+		System.out.println(emp.toString());
+		
+		
+	}
+
+}

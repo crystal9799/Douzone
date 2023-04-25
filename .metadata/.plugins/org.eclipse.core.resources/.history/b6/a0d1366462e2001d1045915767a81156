@@ -1,0 +1,16 @@
+package kr.or.kosa.utils;
+
+/*
+ JDBC 작업( DB결정 )
+ ex) 회원테이블
+ 1. 전체조회 , 조건조회 , 삽입 , 삭제 , 수정
+ 각각의 작업을 할때마다
+ 1. 드라이버 로딩
+ 2. 연결객체 생성 .... 자원해제
+ 3. 반복적인 코드 .... 제거
+ 
+ */
+
+public class ConnectionHelper {
+	
+}

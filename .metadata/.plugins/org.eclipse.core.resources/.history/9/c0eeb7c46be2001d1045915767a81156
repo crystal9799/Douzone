@@ -1,0 +1,8 @@
+
+public class Ex07_SingletonHelper {
+
+	public static void main(String[] args) {
+		
+	}
+
+}

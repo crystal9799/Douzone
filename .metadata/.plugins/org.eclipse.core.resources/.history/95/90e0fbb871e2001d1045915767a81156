@@ -1,0 +1,23 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import kr.or.kosa.utils.SingletonHelper;
+
+public class Ex08_Oracle_preparedstatement {
+
+	public static void main(String[] args) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = SingletonHelper.getConnection("oracle", "kosa", "1004");
+			String sql="select empno, ename from emp where empno=?"; //where empno=7788
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+
+}

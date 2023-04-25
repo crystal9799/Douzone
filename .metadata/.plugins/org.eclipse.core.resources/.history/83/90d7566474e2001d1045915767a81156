@@ -1,0 +1,24 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import kr.or.kosa.utils.SingletonHelper;
+
+public class Ex09_Oracle_prepared_DML {
+
+	public static void main(String[] args) {
+		//INSERT
+		//insert into dmlemp(empno,ename,deptno) values(?,?,?)
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = SingletonHelper.getConnection("oracle", "kosa", "1004");
+			String str="insert into dmlemp(empno,ename,deptno) values(?,?,?)";
+			pstmt = conn.prepareStatement(str);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+}
